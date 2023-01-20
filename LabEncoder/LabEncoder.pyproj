@@ -25,6 +25,7 @@
     <Compile Include="pngen.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cat.png" />
     <Content Include="publickey.txt" />
     <Content Include="secretkey.txt" />
   </ItemGroup>

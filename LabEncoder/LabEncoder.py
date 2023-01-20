@@ -8,6 +8,7 @@ from tkinter import ttk
 from tkinter.ttk import Style
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
+from PIL import Image, ImageTk
 
 
 
@@ -18,9 +19,10 @@ fermat_numbers = [3, 5, 17, 257, 65537]
 
 def submitbitesfunc():
 
-    if (entry_1.get() != ""):
+    if (entry_1.get() != "" and entry_1.get().isdecimal()):
         input_bites = int(entry_1.get())
     else:
+        showinfo(title="Information", message="Wrong input!")
         return
     if (input_bites < 16):
         showinfo(title="Information", message="Numbers was not generated, too small bites!")
@@ -117,7 +119,7 @@ def save_the_keys():
         private_key_file.close()
         showinfo(title="Information", message="Keys saved!")
     except: 
-        showinfo(title="Information", message="En error occured!")
+        showinfo(title="Information", message="An error occured!")
         return;
 
 
@@ -266,7 +268,7 @@ def decrypt_file():
     chunks = [encrypted_information[i:i+len_of_n]
               for i in range(0, len(encrypted_information), len_of_n)]
     counter = 1
-    decrypted_file = open(FilePath_D.get()[:-10] + "_decrypted" + ".txt", 'w')
+    decrypted_file = open(FilePath_D.get()[:-10] + "_decrypted" + ".txt", 'w', encoding='utf-8')
     text_for_decrypt['state'] = 'normal'
     text_for_decrypt.delete('1.0', END)
     for e in chunks:
@@ -324,27 +326,31 @@ comboboxPE.place(x=120, y=30)
 comboboxPE.bind("<<ComboboxSelected>>", gcd_)
 
 openfileForPK = Button(tab1, text='File for public key',
-                       command=select_file_p, width=20)
+                       command=select_file_p, width=18)
 openfileForPK.place(x=10, y=150)
 
 openfileForSK = Button(tab1, text='File for secret key',
-                       command=select_file_s, width=20)
-openfileForSK.place(x=10, y=120)
+                       command=select_file_s, width=18)
+openfileForSK.place(x=10, y=90)
 
 openfileForPK['state'] = "disabled"
 openfileForSK['state'] = "disabled"
 
 saveKeysButton = Button(tab1, text='Save keys',
                         command=save_the_keys, justify='center')
-saveKeysButton.place(x=200, y=195)
+saveKeysButton.place(x=200, y=240)
 saveKeysButton['state'] = "disabled"
 
 P = Entry(tab1, width=30)
-P.place(x=200, y=155)
+P.place(x=10, y=180)
 P['state'] = 'readonly'
 S = Entry(tab1, width=30)
-S.place(x=200, y=125)
+S.place(x=10, y=120)
 S['state'] = 'readonly'
+canvas=Canvas(tab1, width=150, height=100, background="grey")
+canvas.place(x=250, y=90)
+img=ImageTk.PhotoImage(file="Cat.png")
+canvas.create_image(150, 100, image=img, anchor="center")
 # -----------------------------tkinter-encryption-layout---------------------------------
 openfileForPK_E = Button(tab2, text='File for public key',
                          command=open_file_p, width=25)
