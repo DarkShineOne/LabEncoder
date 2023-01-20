@@ -23,6 +23,7 @@ def submitbitesfunc():
     else:
         return
     if (input_bites < 16):
+        showinfo(title="Information", message="Numbers was not generated, too small bites!")
         return
     global p
     global q
@@ -35,6 +36,7 @@ def submitbitesfunc():
     eulerFuncVal = (p-1)*(q-1)
     p, q = max(p, q), min(p, q)
     comboboxPE["state"] = 'readonly'
+    saveKeysButton['state'] = "disabled"
     showinfo(title="Information", message="Primal numbers generated!")
 
 
@@ -67,12 +69,17 @@ def select_file_s():
     S['state'] = 'normal'
     S.delete(0, END)
     S.insert(END, str(filename))
+    # S['state'] = 'readonly'
 
 
 
 def gcd_(event):
     global m, d, a
     m, d, a = extended_gcd(int(comboboxPE.get()), int(eulerFuncVal))
+
+    if(d < 0):
+        d += eulerFuncVal;
+
     if (m != 1):
         showinfo(title="Information", message="Choose another variant!")
         openfileForPK['state'] = "disabled"
@@ -261,6 +268,7 @@ def decrypt_file():
     counter = 1
     decrypted_file = open(FilePath_D.get()[:-10] + "_decrypted" + ".txt", 'w')
     text_for_decrypt['state'] = 'normal'
+    text_for_decrypt.delete('1.0', END)
     for e in chunks:
         #tic = time.perf_counter()
         decrypted_char = chr(pow(int(e), private_exponent,  modulus))  # MNOGO HAVAET OMG
@@ -390,4 +398,5 @@ encryptButton.place(x=200, y=250)
 
 # -------------------------------main-loop-function-------------------------------
 tab_control.pack(expand=1, fill='both')
+
 window.mainloop()
