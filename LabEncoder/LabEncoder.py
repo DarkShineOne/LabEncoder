@@ -67,6 +67,7 @@ def select_file_s():
     S['state'] = 'normal'
     S.delete(0, END)
     S.insert(END, str(filename))
+    # S['state'] = 'readonly'
 
 
 
@@ -390,4 +391,5 @@ encryptButton.place(x=200, y=250)
 
 # -------------------------------main-loop-function-------------------------------
 tab_control.pack(expand=1, fill='both')
+
 window.mainloop()
